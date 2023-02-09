@@ -38,6 +38,16 @@ git push
 or 
 git push -u 
 
+obs error
+git pull 
+
+Orientação Objeto 
+dotnet  watch run --project Pokedex\Pokedex.csproj   
+
+dotnet watch run 
+
+
+
 
 
 
