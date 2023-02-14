@@ -67,13 +67,18 @@ css
 }
 
 .card:hover {
+
     border: 3px solid red;
+    
     transform: scale(1.15);
+    
     transition: 1s;
+    
     z-index: 1000;
 }
 
 .cursor-pointer {
+
     cursor: pointer;
 }
 
@@ -97,7 +102,8 @@ new c#
 -Pokemon 
 
 
-Tipo 
+Tipo
+
 prop
 
 namespace Pokedex.Models
@@ -105,7 +111,9 @@ namespace Pokedex.Models
     public class Tipo
     {
       //Atributos 
+      
       public string Nome { get; set; }  
+      
       public string Cor { get; set; }  
     }
 }
@@ -118,16 +126,23 @@ namespace Pokedex.Models
     public class Pokemon
     {
         public int Numero { get; set; }
+        
         public string Nome { get; set; }
+        
         public string Descricao { get; set; }
+        
         public string Especie { get; set; }
+        
         public List<string> Tipo { get; set;}
+        
         public double Altura { get; set; }
 
         public double Peso { get; set; }
+        
         public string Imagem { get; set; }
 
         // Método Construtor
+        
         public Pokemon()
         {
             Tipo = new List<string>();   
