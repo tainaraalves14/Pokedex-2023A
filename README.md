@@ -156,6 +156,24 @@ Boostrap
 Arquivo json 
 
 
+Aula III
+
+cd Pokedex 
+dotnet restore 
+dotnet clean 
+
+arquivo css substituição
+
+shift alt f 
+
+indexcshtml 
+substituição 
+
+
+layoutcss 
+substituição 
+
+
 
 
 
