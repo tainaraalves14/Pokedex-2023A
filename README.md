@@ -174,15 +174,99 @@ layoutcss
 substituição 
 
 
+aula v
+
+@ ou \ antes do texto quer dizer que é um texto 
+
+
+HomeControllers.cs
+ public IActionResult Index()
+    {
+        string arquivo = @"Data\pokemons.json";
+        using (StreamReader leitor = new StreamReader(arquivo)) 
+        {
+            string dados = leitor.ReadToEnd(); 
+            var pokemons = JsonSerializer.Deserialize<List<Pokemon>>(dados);
+            return View(pokemons);
+
+        }
+       
+    }
 
 
 
+transformar json em objeto 
+var pokemons = JsonSerializer.Deserialize<List<Pokemon>>(dados);
+
+ctrl . (erro em JsonSerializer) 
+using System.Text.Json;
 
 
 
+Views 
+home 
+index.cshtml
+@model List<Pokedex.Models.Pokemon>
 
 
 
+apagar card 2 
+laços de repetição 
+@foreach 
 
+repete uma determinada extrutura n vezes 
+foreach ele só funciona com listas em geral 
+cada item da minha lista ele salva um por vez na var
+
+@foreach (var pokemon in Model)
+{
+                    
+}
+
+colocar chave no fim da estrutura do card 
+
+@foreach (var pokemon in Model)
+            {
+                    
+           
+            <!-- Card Pokemon - Inicio -->
+            <div class="col">
+                <div class="card shadow-sm cursor-pointer planta venenoso" onclick="GetInfo(001)">
+                    <img src="@Model.Imagem" class="card-img-top" width="100%" height="300" alt="@Model.Nome" />
+                    <div class="card-body">
+                        <p class="card-text mb-0">Nº @Model.Numero.ToString("000")</p>
+                        <h3 class="card-title">@Model.Nome</h3>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="#" class="btn my-2 text-white" style="background-color:#7c5">Planta</a>
+                                <a href="#" class="btn my-2 text-white" style="background-color:#a59">Venenoso</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Pokemon - Fim -->
+
+            }
+            
+ 
+Para fazer funcionar 
+trocar Model por pokemon 
+
+
+cd Pokedex 
+dotnet watch run 
+
+ <div class="btn-group">
+                                @foreach (var tipo in pokemon.Tipo)
+                                {
+                                    <a href="#" class="btn my-2 text-white bg-darck" >@tipo</a>
+                                }
+                                
+                            </div>
+
+
+commit 
+Leitura dos Arquivos Json e exibição na index 
 
 
