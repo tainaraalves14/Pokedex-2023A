@@ -1,68 +1,65 @@
-﻿@model List<Pokedex.Models.Pokemon>
+﻿@model PokedexDto
+@inject Pokedex.Services.IPokeService service
 @{
     ViewData["Title"] = "Home";
-    // Layout = null;
-    List<Tipo> tipos = ViewBag.Tipos;
-
-    string Cor(string nomeTipo) 
-    {
-        var tipo = tipos.Where(t => t.Nome.Equals(nomeTipo)).FirstOrDefault();
-        return tipo.Cor;
-    }   
 }
-
 
 <section class="pt-5 pb-3 text-center container">
     <div class="row">
         <div class="col mx-auto">
             <h1>Pokédex</h1>
             <div class="group">
-                <button id="btn-all" class="btn btn-md my-2 text-white bg-secondary btn-filter">Ver
-                    Todos</button>
-                @foreach (var tipo in tipos)
-                { 
-                    <button id="btn-@tipo.Nome.ToLower()" class="btn btn-sm my-2 text-white btn-filter"
-                       style="background-color:@tipo.Cor">@tipo.Nome</button>
+                <button id="btn-all" class="btn btn-lg my-2 text-white bg-secondary btn-filter" onclick="filter('all')">
+                    Ver Todos
+                </button>
+                @foreach (var tipo in Model.Tipos)
+                {
+                    <button id="btn-@tipo.Nome.ToLower()" class="btn btn-sm my-2 text-white btn-filter" onclick="filter('@tipo.Nome.ToLower()')" style="background-color:@tipo.Cor">
+                        @tipo.Nome
+                    </button>
                 }
             </div>
         </div>
     </div>
 </section>
-
 <div class="album py-5 bg-light">
     <div class="container">
-
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-            @foreach (var pokemon in Model)
-            {
-
             <!-- Card Pokemon - Inicio -->
-            <div class="col">
-                <div class="card shadow-sm cursor-pointer planta venenoso" onclick="GetInfo(001)">
-                    <img src="@pokemon.Imagem" class="card-img-top" width="100%" height="300" alt="@pokemon.Nome" />
-                    <div class="card-body">
-                        <p class="card-text mb-0">Nº @pokemon.Numero.ToString("000")</p>
-                        <h3 class="card-title">@pokemon.Nome</h3>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                @foreach (var tipo in pokemon.Tipo)
-                                {
-                                    <a href="#" class="btn my-2 text-white bg-darck" 
-                                       style="background-color: :@Cor(tipo)">@tipo</a>
-                                }
+            @foreach (var pokemon in Model.Pokemons)
+            {
+                <div class="col">
+                    <div class="card shadow-sm cursor-pointer @string.Join(' ', pokemon.Tipo).ToLower()" onclick="GetInfo(@pokemon.Numero)">
+                        <img src="@pokemon.Imagem" class="card-img-top" width="100%" height="300" alt="@pokemon.Nome" />
+                        <div class="card-body">
+                            <p class="card-text mb-0">Nº @pokemon.Numero.ToString("000")</p>
+                            <h3 class="card-title">@pokemon.Nome</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    @foreach (var tipo in pokemon.Tipo)
+                                    {
+                                        <a asp-action="Index" asp-route-tipo="@tipo.ToLower()" class="btn my-2 text-white"style="background-color:@service.GetTipo(tipo).Cor">@tipo</a>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
             <!-- Card Pokemon - Fim -->
-    }
-            
-            <div id="zeroPokemon" class="col-lg-12 text-center" hidden>
+            <div id="zeroPokemon" class="col-lg-12 text-center">
                 <h1 class="my-3 text-danger">Nenhum Pokemon Encontrado</h1>
             </div>
         </div>
-
-
     </div>
 </div>
+@section Scripts{
+<script src="~/js/site.js"></script>
+<script>
+    let toFilter = '@Html.Raw(ViewData["Filter"])';
+    filter(toFilter);
+    function GetInfo(number) {
+        window.location = '@Url.Action("Details", "Home")' + '?Numero=' + number;
+    }
+</script>
+}
